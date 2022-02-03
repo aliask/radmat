@@ -1,11 +1,4 @@
-#!/usr/local/bin/python3
-
-# Activate the virtual environment inside Python to allow simple execution
-import os
-
-base_dir = os.path.dirname(os.path.realpath(os.path.expanduser(__file__)))
-activate_this = os.path.join(base_dir, "venv/bin/activate_this.py")
-exec(open(activate_this).read())
+#!/usr/bin/env python3
 
 import ftplib
 import logging
@@ -17,15 +10,17 @@ from matrix_pdu import FramePDU, CommandPDU
 import socket
 import schedule
 
-RADAR_ID = "IDR023"
-download_root = "/tmp/radar/download/"
-ready_root = "/tmp/radar/ready/"
+RADAR_ID = os.environ.get("RADAR_ID", "IDR023")
+LEDSERVER_PORT = int(os.environ.get("LEDSERVER_PORT", 20304))
 
-DESTINATION_PANEL = ("127.0.0.1", 20304)
+DESTINATION_PANEL = ("127.0.0.1", LEDSERVER_PORT)
 PANEL_SIZE = (32, 16)
 
 # Avoid re-downloading every time
 FILES_TO_CACHE = 30
+
+download_root = "/tmp/radar/download/"
+ready_root = "/tmp/radar/ready/"
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -115,10 +110,11 @@ def main():
     os.makedirs(download_root, exist_ok=True)
     os.makedirs(ready_root, exist_ok=True)
     schedule.every(5).minutes.do(update_files)
+    schedule.every(5).minutes.do(send_brightness, 20)
     update_files()
+
     while True:
         schedule.run_pending()
-        send_brightness(20)
         dir_files = sorted(glob.glob(ready_root + "/*.png"))
         send_images(dir_files[-6:], delay=0.2)
         time.sleep(1)

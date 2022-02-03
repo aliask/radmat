@@ -1,0 +1,11 @@
+version: "3"
+services:
+  radmat:
+    build: .
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - "LEDSERVER_PORT=20304"
+      - "RADAR_ID=IDR023"
+    volumes:
+      - .:/app
