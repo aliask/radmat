@@ -4,7 +4,7 @@ import ftplib
 import logging
 import os
 import glob
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import time
 from matrix_pdu import FramePDU, CommandPDU
 import socket
@@ -56,12 +56,15 @@ def resize_image(infile, outfile):
 
 def resize_all_images(directory, outdir):
     downloaded_files = os.listdir(directory)
-    for file in downloaded_files:
-        infile = os.path.join(directory, file)
-        outfile = os.path.join(outdir, file)
-        if not os.path.exists(outfile):
-            logging.debug("Resizing " + file)
-            resize_image(infile, outfile)
+    for downloaded_file in downloaded_files:
+        infile = os.path.join(directory, downloaded_file)
+        outfile = os.path.join(outdir, downloaded_file)
+        if not os.path.exists(outfile) and downloaded_file.endswith(".png"):
+            logging.debug("Resizing " + downloaded_file)
+            try:
+              resize_image(infile, outfile)
+            except UnidentifiedImageError as e:
+              logging.warning(f"Unkown image format for file: {infile}", e)
 
 
 def send_image(file, opened_socket):
