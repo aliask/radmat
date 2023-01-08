@@ -6,6 +6,7 @@ services:
     network_mode: host
     environment:
       - "LEDSERVER_PORT=20304"
+      - "LEDSERVER_HOST=127.0.0.1"
       - "RADAR_ID=IDR023"
     volumes:
       - .:/app
