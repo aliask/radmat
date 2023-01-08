@@ -67,7 +67,7 @@ def fetch_new_images(radar_id: str, outdir: str):
 def resize_image(infile: str, outfile: str):
     im = Image.open(infile)
     ow, oh = im.size
-    outim = im.crop(box=(0, int(oh * 0.25, base=10), ow, int(oh * 0.75, base=10)))
+    outim = im.crop(box=(0, int(oh * 0.25), ow, int(oh * 0.75)))
     outim = outim.resize(size=PANEL_SIZE, resample=Image.BILINEAR)
     outim.save(outfile)
 
