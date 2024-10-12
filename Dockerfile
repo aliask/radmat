@@ -1,16 +1,19 @@
-FROM python:3.12-alpine
+FROM python:3.10-slim
 
-# Install Build dependencies for rpi_ws281x and Pillow
-RUN apk --no-cache add python3-dev gcc libc-dev \
-        tiff-dev jpeg-dev openjpeg-dev zlib-dev freetype-dev lcms2-dev \
-        libwebp-dev tcl-dev tk-dev harfbuzz-dev fribidi-dev libimagequant-dev \
-        libxcb-dev libpng-dev
+LABEL org.opencontainers.image.authors="aliask"
+LABEL org.opencontainers.image.source="https://github.com/aliask/radmat"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.title="RADMAT"
+LABEL org.opencontainers.image.description="Really Awesome Display of Meteorologic / Atmospheric Things (RADMAT)"
 
 WORKDIR /app
 
+# Upgrade pip and install wheel
+RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel
+
 # Install Python dependencies
 COPY requirements.txt /app
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY . /app
+COPY src/* .
 CMD [ "python3", "main.py" ]
