@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          cache-from: type=registry,ref=user/app:latest
+          cache-from: type=registry,ref=${{ vars.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}
           cache-to: type=inline
           platforms: |
             linux/amd64

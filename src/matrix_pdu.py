@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import struct
+
 from PIL import Image
 
 
