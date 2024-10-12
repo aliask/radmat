@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 import ftplib
+import glob
 import logging
 import os
-import glob
-from PIL import Image, UnidentifiedImageError
-import time
-from matrix_pdu import FramePDU, CommandPDU
 import socket
+import time
+
+from PIL import Image, UnidentifiedImageError
 import schedule
+
+from matrix_pdu import FramePDU, CommandPDU
 
 RADAR_ID = os.environ.get("RADAR_ID", "IDR023")
 LEDSERVER_PORT = int(os.environ.get("LEDSERVER_PORT", 20304))
@@ -65,7 +67,8 @@ def resize_all_images(directory, outdir):
             try:
                 resize_image(infile, outfile)
             except UnidentifiedImageError as e:
-                logging.warning(f"Unkown image format for file: {infile}", e)
+                logging.warning(f"Unkown image format for file: {infile}. Deleting.", e)
+                os.unlink(infile)
 
 
 def send_image(file, opened_socket):

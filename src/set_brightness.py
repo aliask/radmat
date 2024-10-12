@@ -8,9 +8,10 @@ activate_this = os.path.join(base_dir, "venv/bin/activate_this.py")
 exec(open(activate_this).read())
 
 import logging
-from matrix_pdu import CommandPDU
 import socket
 import sys
+
+from matrix_pdu import CommandPDU
 
 LEDSERVER_PORT = int(os.environ.get("LEDSERVER_PORT", 20304))
 LEDSERVER_HOST = os.environ.get("LEDSERVER_HOST", "127.0.0.1")

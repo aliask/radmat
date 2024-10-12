@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.13-slim
 
 LABEL org.opencontainers.image.authors="aliask"
 LABEL org.opencontainers.image.source="https://github.com/aliask/radmat"
