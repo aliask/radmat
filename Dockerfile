@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:3.12-alpine
 
 # Install Build dependencies for rpi_ws281x and Pillow
 RUN apk --no-cache add python3-dev gcc libc-dev \

@@ -7,7 +7,6 @@ jobs:
     container:
       image: catthehacker/ubuntu:act-latest
     env:
-      IMAGE_REGISTRY: git.ravenscroft.cc
       RUNNER_TOOL_CACHE: /toolcache
     steps:
       - name: Checkout
@@ -22,9 +21,9 @@ jobs:
       - name: Login to registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.IMAGE_REGISTRY }}
-          username: ${{ vars.CR_USERNAME }}
-          password: ${{ secrets.CR_PASSWORD }}
+          registry: ${{ vars.IMAGE_REGISTRY }}
+          username: ${{ vars.REGISTRY_USERNAME}}
+          password: ${{ secrets.REGISTRY_TOKEN}}
 
       - name: Get Meta
         id: meta
@@ -43,5 +42,5 @@ jobs:
             linux/arm64
           push: true
           tags: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:${{ steps.meta.outputs.REPO_VERSION }}
-            ${{ env.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:latest
+            ${{ vars.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:${{ steps.meta.outputs.REPO_VERSION }}
+            ${{ vars.IMAGE_REGISTRY }}/${{ env.GITHUB_REPOSITORY }}:latest
