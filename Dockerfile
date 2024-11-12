@@ -1,4 +1,4 @@
-FROM python:3.13-slim@sha256:2d330ea4b78bc6a8e0bdfd9624954d0c4beb54734681293361ad8fdc702336f1
+FROM python:3.13-slim@sha256:ed304b4ecba50d31c910b6964c8a182782cf7247234af6a106145e5a6f270a72
 
 LABEL org.opencontainers.image.authors="aliask"
 LABEL org.opencontainers.image.source="https://github.com/aliask/radmat"
