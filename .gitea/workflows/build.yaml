@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: catthehacker/ubuntu:act-latest@sha256:08720f8eeff9ad4504b2cf36187e2bc59508be7eefa17e59e34e91e8b8c5b1d7
+      image: catthehacker/ubuntu:act-latest@sha256:b21889ed2203a577ba16e39a6a90454f7b8a6b6c612f53ef8f7a9b5d981cc0ec
     env:
       RUNNER_TOOL_CACHE: /toolcache
     steps:
