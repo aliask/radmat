@@ -7,4 +7,4 @@ pillow==11.3.0
 platformdirs==4.3.8
 schedule==1.2.2
 tomli==2.2.1
-typing_extensions==4.14.1
+typing_extensions==4.15.0
